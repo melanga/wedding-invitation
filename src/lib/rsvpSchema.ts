@@ -11,7 +11,7 @@ export const rsvpSchema = z.object({
   email: z
     .string()
     .trim()
-    .email("Please enter a valid email address"),
+    .pipe(z.email("Please enter a valid email address")),
   attending: z.enum(attendanceOptions, {
     error: "Please let us know if you'll be attending",
   }),
