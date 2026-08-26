@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --color-ivory: #faf6f0;
+  --color-cream: #f1e8da;
+  --color-charcoal: #2b2622;
+  --color-taupe: #756a5e;
+  --color-sage: #869878;
+  --color-sage-dark: #5c6b50;
+  --color-gold: #b28e5c;
+  --color-gold-light: #ddc7a1;
+}
+
+@theme inline {
+  --color-ivory: var(--color-ivory);
+  --color-cream: var(--color-cream);
+  --color-charcoal: var(--color-charcoal);
+  --color-taupe: var(--color-taupe);
+  --color-sage: var(--color-sage);
+  --color-sage-dark: var(--color-sage-dark);
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+
+  --font-cursive: var(--font-cursive);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ivory);
+}
+
+::selection {
+  background-color: var(--color-gold-light);
+  color: var(--color-charcoal);
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-bounce-soft {
+    animation: none;
+  }
+}
