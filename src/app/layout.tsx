@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Great_Vibes, Jost, Playfair_Display } from "next/font/google";
 import { weddingConfig } from "@/lib/weddingConfig";
 import "./globals.css";
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description: weddingConfig.copy.metaDescription,
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#f7f2ea",
