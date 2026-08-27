@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRsvpModal } from "@/components/RsvpModalContext";
 import { RsvpForm } from "@/components/RsvpForm";
@@ -10,14 +10,16 @@ export function RsvpModal() {
   const { isOpen, close } = useRsvpModal();
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  const handleClose = useCallback(() => {
+    setHasSubmitted(false);
+    close();
+  }, [close]);
+
   useEffect(() => {
-    if (!isOpen) {
-      setHasSubmitted(false);
-      return;
-    }
+    if (!isOpen) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") close();
+      if (event.key === "Escape") handleClose();
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -27,7 +29,7 @@ export function RsvpModal() {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [isOpen, close]);
+  }, [isOpen, handleClose]);
 
   return (
     <AnimatePresence>
@@ -38,7 +40,7 @@ export function RsvpModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          onClick={close}
+          onClick={handleClose}
           role="presentation"
         >
           <motion.div
@@ -71,7 +73,7 @@ export function RsvpModal() {
               </div>
               <button
                 type="button"
-                onClick={close}
+                onClick={handleClose}
                 aria-label="Close RSVP form"
                 className="shrink-0 rounded-full p-1 text-taupe transition-colors hover:text-charcoal"
               >
