@@ -10,7 +10,11 @@ type SubmitState = "idle" | "submitting" | "success" | "error";
 const inputClasses =
   "w-full rounded-lg border border-black/10 bg-white px-4 py-2.5 text-sm text-charcoal placeholder:text-taupe/60 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage";
 
-export function RsvpForm() {
+interface RsvpFormProps {
+  onSuccessChange?: (success: boolean) => void;
+}
+
+export function RsvpForm({ onSuccessChange }: RsvpFormProps) {
   const [state, setState] = useState<SubmitState>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -49,6 +53,7 @@ export function RsvpForm() {
       }
 
       setState("success");
+      onSuccessChange?.(true);
       reset();
     } catch (error) {
       setState("error");

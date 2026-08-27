@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRsvpModal } from "@/components/RsvpModalContext";
 import { RsvpForm } from "@/components/RsvpForm";
@@ -8,9 +8,13 @@ import { weddingConfig } from "@/lib/weddingConfig";
 
 export function RsvpModal() {
   const { isOpen, close } = useRsvpModal();
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      setHasSubmitted(false);
+      return;
+    }
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
@@ -56,12 +60,14 @@ export function RsvpModal() {
                 >
                   RSVP
                 </h2>
-                <p className="mt-1 text-sm text-taupe">
-                  Kindly respond by{" "}
-                  <span className="font-medium text-charcoal">
-                    {weddingConfig.rsvp.deadlineDisplay}
-                  </span>
-                </p>
+                {hasSubmitted ? null : (
+                  <p className="mt-1 text-sm text-taupe">
+                    Kindly respond by{" "}
+                    <span className="font-medium text-charcoal">
+                      {weddingConfig.rsvp.deadlineDisplay}
+                    </span>
+                  </p>
+                )}
               </div>
               <button
                 type="button"
@@ -80,7 +86,7 @@ export function RsvpModal() {
               </button>
             </div>
 
-            <RsvpForm />
+            <RsvpForm onSuccessChange={setHasSubmitted} />
           </motion.div>
         </motion.div>
       ) : null}
