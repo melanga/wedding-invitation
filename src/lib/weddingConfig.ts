@@ -99,7 +99,7 @@ export const weddingConfig: WeddingConfig = {
     {
       time: "4:00 PM",
       title: "Departure",
-      description: "Send us off with your love — and perhaps a little rice.",
+      description: "Send us off with your love.",
     },
   ],
   rsvp: {

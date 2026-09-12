@@ -38,7 +38,13 @@ export function revealVariants(direction: RevealDirection): Variants {
 
   return {
     hidden: { opacity: 0, x, y, filter: "blur(4px)" },
-    visible: { opacity: 1, x: 0, y: 0, filter: "blur(0px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+      transitionEnd: { filter: "none" },
+    },
   };
 }
 
@@ -61,6 +67,7 @@ export const staggerChild: Variants = {
     y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.9, ease: EASE_OUT },
+    transitionEnd: { filter: "none" },
   },
 };
 

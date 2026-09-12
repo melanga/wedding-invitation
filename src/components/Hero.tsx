@@ -14,7 +14,6 @@ import { FloatingPetals } from "@/components/FloatingPetals";
 import { RsvpTriggerButton } from "@/components/RsvpTriggerButton";
 import { EASE_OUT, SPRING_SOFT, staggerChild, staggerContainer } from "@/lib/motion";
 
-/** Cursive names sharpen into focus — no clipping issues with script glyphs. */
 const nameFocus: Variants = {
   hidden: { opacity: 0, y: 30, letterSpacing: "0.12em", filter: "blur(14px)" },
   visible: {
@@ -23,6 +22,7 @@ const nameFocus: Variants = {
     letterSpacing: "0em",
     filter: "blur(0px)",
     transition: { duration: 1.3, ease: EASE_OUT },
+    transitionEnd: { filter: "none" },
   },
 };
 
@@ -87,10 +87,10 @@ export function Hero() {
           {copy.greetingEyebrow}
         </motion.p>
 
-        <div className="mt-6 flex flex-col items-center lg:mt-10 lg:flex-row lg:items-baseline lg:gap-8">
+        <div className="mt-6 flex flex-col items-center overflow-visible px-4 lg:mt-10 lg:flex-row lg:items-baseline lg:gap-8">
           <motion.h1
             variants={nameFocus}
-            className="font-cursive text-6xl leading-none text-charcoal sm:text-7xl lg:text-8xl xl:text-9xl"
+            className="overflow-visible px-[0.35em] font-cursive text-6xl leading-[1.2] text-charcoal sm:text-7xl lg:text-8xl xl:text-9xl"
           >
             {couple.partnerOne}
           </motion.h1>
@@ -102,7 +102,7 @@ export function Hero() {
           </motion.span>
           <motion.h1
             variants={nameFocus}
-            className="font-cursive text-6xl leading-none text-charcoal sm:text-7xl lg:text-8xl xl:text-9xl"
+            className="overflow-visible px-[0.35em] font-cursive text-6xl leading-[1.2] text-charcoal sm:text-7xl lg:text-8xl xl:text-9xl"
           >
             {couple.partnerTwo}
           </motion.h1>

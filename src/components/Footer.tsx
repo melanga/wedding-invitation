@@ -18,7 +18,7 @@ export function Footer() {
       style={{ paddingBottom: FOOTER_CLEARANCE }}
     >
       <Reveal>
-        <p className="font-cursive text-4xl lg:text-5xl">
+        <p className="overflow-visible px-[0.35em] font-cursive text-4xl leading-[1.2] lg:text-5xl">
           {couple.partnerOne} &amp; {couple.partnerTwo}
         </p>
         <Ornament className="mt-5 text-gold-light" />
