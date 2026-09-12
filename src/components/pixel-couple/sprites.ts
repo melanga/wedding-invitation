@@ -156,7 +156,7 @@ const BRIDE_WALK_A = grid([
   "....oggygygyggygo.............",
   "...owwWwywwywWwwwo............",
   "..owwwWwgwwgwwWwwwo...........",
-  "..owwwWwywwywwWwwwo..........",
+  "..owwwWwywwywwWwwwo...........",
   ".owwwwWwgwwgwwwwWwwwwo........",
   ".owwwwWwywwywwwwWwwwwo........",
   "owwwwwWwgwwgwwwwwWwwwwwo......",
