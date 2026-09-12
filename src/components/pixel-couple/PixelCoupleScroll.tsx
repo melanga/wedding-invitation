@@ -19,12 +19,13 @@ import {
   HEART_SPRITE,
   HEART_WIDTH,
   HOLD_OVERLAP,
+  SPRITE_DISPLAY_WIDTH,
   SPRITE_HEIGHT,
   SPRITE_WIDTH,
   type CharacterSprites,
 } from "./sprites";
 
-export const MEET_PROGRESS = 0.86;
+const MEET_PROGRESS = 0.86;
 const HOLD_THRESHOLD = 0.995;
 const STEPS_PER_JOURNEY = 24;
 const BOB_PX = 2;
@@ -39,7 +40,7 @@ type OverlayStyle = MotionStyle &
 function overlayStyle(walk: MotionValue<number>): OverlayStyle {
   return {
     "--walk": walk,
-    "--sprite-w": "clamp(94px, 19vw, 156px)",
+    "--sprite-w": SPRITE_DISPLAY_WIDTH,
   };
 }
 

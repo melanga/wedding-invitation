@@ -4,7 +4,6 @@ import { ScheduleTimeline } from "@/components/ScheduleTimeline";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
 import { ScrollProgress } from "@/components/ScrollProgress";
-import { StickyRsvpButton } from "@/components/StickyRsvpButton";
 import { RsvpModalProvider } from "@/components/RsvpModalContext";
 import { RsvpModal } from "@/components/RsvpModal";
 import { PixelCoupleScroll } from "@/components/pixel-couple/PixelCoupleScroll";
@@ -21,7 +20,6 @@ export default function Home() {
         <Footer />
       </main>
       <PixelCoupleScroll />
-      <StickyRsvpButton />
       <RsvpModal />
     </RsvpModalProvider>
   );
