@@ -1,10 +1,15 @@
 /**
  * Pixel-art sprites for the Kandyan wedding couple.
+ *
+ * Both characters share a 48x64 grid. In the hold pose the bride's right
+ * hand (cols 32-38) and the groom's left hand (cols 2-8) occupy rows 38-41,
+ * so with `HOLD_OVERLAP` columns of overlap the two hands land on the same
+ * pixels. Keep those anchors in sync when editing either sprite.
  */
 
-export const SPRITE_WIDTH = 30;
-export const SPRITE_HEIGHT = 40;
-export const HOLD_OVERLAP = 11;
+export const SPRITE_WIDTH = 48;
+export const SPRITE_HEIGHT = 64;
+export const HOLD_OVERLAP = 18;
 export const SPRITE_DISPLAY_WIDTH = "clamp(94px, 19vw, 156px)";
 
 export type SpriteGrid = readonly string[];
@@ -18,7 +23,7 @@ export interface CharacterSprites {
 function grid(
   rows: readonly string[],
   width = SPRITE_WIDTH,
-  height = SPRITE_HEIGHT
+  height = SPRITE_HEIGHT,
 ): SpriteGrid {
   if (rows.length !== height) {
     throw new Error(`Sprite must have ${height} rows, got ${rows.length}`);
@@ -26,7 +31,7 @@ function grid(
   const badRow = rows.findIndex((row) => row.length !== width);
   if (badRow !== -1) {
     throw new Error(
-      `Sprite row ${badRow} must have ${width} columns, got ${rows[badRow].length}`
+      `Sprite row ${badRow} must have ${width} columns, got ${rows[badRow].length}`,
     );
   }
   return rows;
@@ -34,173 +39,198 @@ function grid(
 
 function withRows(
   base: SpriteGrid,
-  startRow: number,
-  patch: readonly string[]
+  patches: Readonly<Record<number, string>>,
 ): string[] {
-  const next = [...base];
-  patch.forEach((row, index) => {
-    next[startRow + index] = row;
-  });
-  return next;
+  return base.map((row, index) => patches[index] ?? row);
 }
 
 const GROOM_WALK_A = grid([
-  ".................yy...........",
-  "................gggg..........",
-  "..............orrrrrro........",
-  "............orrrrrrrrrro......",
-  "..........orryrrryyrrryrro....",
-  ".........oyrrrrrrrrrrrrrryo...",
-  ".........oRrrrrrrrrrrrrrrRo...",
-  "..........oggyggyggyggyggo....",
-  "...........ohhhhhhhhhhhho.....",
-  "............ossssssssssso.....",
-  "............oshhssshhssso.....",
-  "............oskkssskkssso.....",
-  "............obbsssssbbsso.....",
-  "............ossSsssssssso.....",
-  "............ossmmmsssssso.....",
-  ".............ossssssssso......",
-  "..............ossssssso.......",
-  "...............ossssso........",
-  "..............ogsssssgo.......",
-  "...........owwwwwgggwwwwwo....",
-  "..........owwwwwwgggwwwwwwo...",
-  "..........oWwwywwygywwywwWo...",
-  "..........oWwwwywygywywwwWo...",
-  "...........owwwwygggywwwwo....",
-  "...........owwwwwgggwwwwwo....",
-  "............oWwwwgggwwwWo.....",
-  "............osswwgggwwsso.....",
-  ".............owwwgggwwwo......",
-  "............orrrrygyrrrro.....",
-  "............oRrrrgggrrrRo.....",
-  "...........owwWwwwgwwwWwwo....",
-  "..........owwWwwwwgwwwwWwwo...",
-  ".........owwwWwwwwgwwwwWwwwo..",
-  ".........owwwWwwwwgwwwwWwwwo..",
-  "........owwwwWwwwwgwwwwWwwwwo.",
-  "........oggyggggyggyggggygggo.",
-  "........oGGGGGGGGGGGGGGGGGGGo.",
-  ".............oso.....oso......",
-  "..........okkkko....okkkko....",
-  "..........oooooo....oooooo....",
+  "...........................gyyg.................",
+  "...........................oggo.................",
+  "..........................oggggo................",
+  "......................orrrrrrrrrrrro............",
+  "...................orrryrrrrrrrrrryrrro.........",
+  ".................orryrrryrrryyrrryrrryrro.......",
+  "...............orrrrryrrryrrrrrryrrryrrrrro.....",
+  ".............oyrrRrrrrrrrrrrrrrrrrrrrrrrRrryo...",
+  "............oRRRrrrrrrrrrrrrrrrrrrrrrrrrrrRRRo..",
+  "............oRRRRrrrrrrrrrrrrrrrrrrrrrrrrRRRRo..",
+  ".............oggyggyggyggyggyyggyggyggyggyggo...",
+  "..............oGGGGGGGGGGGGGGGGGGGGGGGGGGGGo....",
+  "..................ohhhhhhhhhhhhhhhhhhhho........",
+  "..................ohhsssssssssssssssshho........",
+  "..................ohssssssssssssssssssho........",
+  "..................ohsssshhhsssshhhssssho........",
+  "................oSsssssskksssssskkssssssSo......",
+  "................oSbbssssfksssssskfssssbbSo......",
+  ".................oSbbssskksssssskksssbbSo.......",
+  "..................osssssssssSSssssssssso........",
+  "..................osssssshhhsshhhsssssso........",
+  "..................osssssssmmmmmmssssssso........",
+  "...................osssssssssssssssssso.........",
+  "....................osssssssssssssssso..........",
+  "......................osssssSSssssso............",
+  ".......................oSssssssssSo.............",
+  "......................ogyssssssssygo............",
+  ".....................owggyssssssyggwo...........",
+  "...............owwwwwwwwwwwgGGgwwwwwwwwwwwo.....",
+  "..............owwWwwwwwwwwwgyygwwwwwwwwwWwwo....",
+  ".............owwWWwwwwgwwwwgGGgwwwwgwwwwWWwwo...",
+  ".............owwWWwwwgwwwwwgyygwwwwwgwwwWWwwo...",
+  ".............owwWWwwgwwwwwwgGGgwwwwwwgwwWWwwo...",
+  ".............owwWWwgwwwwwwwgyygwwwwwwwgwWWwwo...",
+  ".............owwWWwygwwwwwwgGGgwwwwwwgywWWwwo...",
+  "..............oWwwoWwwwwwwwgyygwwwwwwwWowwWo....",
+  "..............oWwwoWwwwwwwwgGGgwwwwwwwWowwWo....",
+  "..............oWwwoWwwwwwwwgyygwwwwwwwWowwWo....",
+  "..............oWwwoWwwwwwwwgGGgwwwwwwwWowwWo....",
+  "..............oggyoWwwwwwwwgyygwwwwwwwWoyggo....",
+  "..............osssoWwwwwwwwgGGgwwwwwwwWossso....",
+  "..............oSssoWwwwwwwwgyygwwwwwwwWossSo....",
+  "...............oooGgGgGgGgGgGGgGgGgGgGgGooo.....",
+  ".................oGggggggggggggggggggggGo.......",
+  ".................orrrrrrrrgyyyygrrrrrrrro.......",
+  ".................oRRrrrrrrgGGGGgrrrrrrRRo.......",
+  ".................oggggggggggggggggggggggo.......",
+  ".................owwwwwwwwgrrrrgwwwwwwwwo.......",
+  "................owwWwwwwwwgrrrrgwwwwwwWwwo......",
+  "................owwWwwwwwwgRrrRgwwwwwwWwwo......",
+  "...............owwwWwwwwwwgRrrRgwwwwwwWwwwo.....",
+  "...............owwwWwwwwwwwgrrgwwwwwwwWwwwo.....",
+  "..............owwwwWwwwwwwwgyygwwwwwwwWwwwwo....",
+  "..............owwwwWwwwwwwwyGGywwwwwwwWwwwwo....",
+  ".............owwwwwWwwwwwwwgyygwwwwwwwWwwwwwo...",
+  ".............owwwwwWwwwwwwwyGGywwwwwwwWwwwwwo...",
+  "............owwwwwwWwwwwwwwgyygwwwwwwwWwwwwwwo..",
+  "............owwwwwwWwwwwwwwyGGywwwwwwwWwwwwwwo..",
+  "............owwwwwwWwwwwwwwgyygwwwwwwwWwwwwwwo..",
+  "............oggyggyggyggyggyggyggyggyggyggyggo..",
+  "............oGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGo..",
+  "..................owwwwwo........owwwwwo........",
+  "..................oWwwwWo........oWwwwWo........",
+  "..................ooooooo........ooooooo........",
 ]);
 
-const GROOM_FEET_TOGETHER = [
-  "..............os..so..........",
-  ".............okkookko.........",
-  ".............oooooooo.........",
-];
-
-const GROOM_WALK_B = grid(withRows(GROOM_WALK_A, 37, GROOM_FEET_TOGETHER));
+const GROOM_WALK_B = grid(
+  withRows(GROOM_WALK_A, {
+    61: "......................owwwwwoowwwwwo............",
+    62: "......................oWwwwWooWwwwWo............",
+    63: "......................oooooooooooooo............",
+  }),
+);
 
 const GROOM_HOLD = grid(
-  GROOM_WALK_B.map((row, index) => {
-    switch (index) {
-      case 10:
-        return "............oskkssskkssso.....";
-      case 11:
-        return "............ossssssssssso.....";
-      case 14:
-        return "............osmmmmsssssso.....";
-      case 19:
-        return ".......ooooowwwwwgggwwwwwo....";
-      case 20:
-        return ".......owwowwwwwwgggwwwwwwo...";
-      case 21:
-        return "......owwooWwwywwygywwywwWo...";
-      case 22:
-        return ".....owwo.oWwwwywygywywwwWo...";
-      case 23:
-        return "....owwo...owwwwygggywwwwo....";
-      case 24:
-        return ".ossso.....owwwwwgggwwwwwo....";
-      case 25:
-        return "..ooo.......oWwwwgggwwwWo.....";
-      default:
-        return row;
-    }
-  })
+  withRows(GROOM_WALK_B, {
+    16: "................oSsssssskkssssskkkssssssSo......",
+    17: "................oSbbssskssksssksssssssbbSo......",
+    18: ".................oSbbssssssssssssssssbbSo.......",
+    21: "..................ossssssmmmmmmmmsssssso........",
+    29: ".........oooooowwWwwwwwwwwwgyygwwwwwwwwwWwwo....",
+    30: "........owwwwwwwWWwwwwgwwwwgGGgwwwwgwwwwWWwwo...",
+    31: ".......owwwwoowwWWwwwgwwwwwgyygwwwwwgwwwWWwwo...",
+    32: "......owwwwo.owwWWwwgwwwwwwgGGgwwwwwwgwwWWwwo...",
+    33: ".....owwwwo..owwWWwgwwwwwwwgyygwwwwwwwgwWWwwo...",
+    34: "....owwwwo...owwWWwygwwwwwwgGGgwwwwwwgywWWwwo...",
+    35: "...owwwwo.........oWwwwwwwwgyygwwwwwwwWowwWo....",
+    36: "..owwwwo..........oWwwwwwwwgGGgwwwwwwwWowwWo....",
+    37: "..ogyggo..........oWwwwwwwwgyygwwwwwwwWowwWo....",
+    38: "..ossssso.........oWwwwwwwwgGGgwwwwwwwWowwWo....",
+    39: "..ossssso.........oWwwwwwwwgyygwwwwwwwWoyggo....",
+    40: "..oSsssSo.........oWwwwwwwwgGGgwwwwwwwWossso....",
+    41: "...ooooo..........oWwwwwwwwgyygwwwwwwwWossSo....",
+    42: "..................GgGgGgGgGgGGgGgGgGgGgGooo.....",
+  }),
 );
 
 const BRIDE_WALK_A = grid([
-  "..............................",
-  "..............................",
-  "..............................",
-  "..............................",
-  "......pp.ff.pp................",
-  ".....ohhhhhhhhhhho............",
-  "...ohhhhhhhhhhhhhho...........",
-  "..ophhhhhhhhhhhhho............",
-  "..ohhgggggggggggho............",
-  "..ohhsssssgssssso.............",
-  "..ohhssshhssshhso.............",
-  "..ohhssskkssskkso.............",
-  "..ohhsbbsssssbbso.............",
-  "..ohhssssssssSssgo............",
-  "...ossssssmmmsso..............",
-  "....osssssssssso..............",
-  ".....osssssssso...............",
-  ".......ossssso................",
-  "......ogggggggo...............",
-  "....owwwssssswwwowwwo.........",
-  "...owwwwysssywwwoWWWo.........",
-  "..oWwwwwwgggwwwwoWWo..........",
-  "..oWwwwwwygywwppfpo...........",
-  "..oWwwwwwwssplppo.............",
-  "..oWwwwwwwsslplpo.............",
-  "...owwwwwwwwlLlo..............",
-  "...owwwwwwwwwwo...............",
-  "....owwwwwwwwwwwo.............",
-  "....oggygggyggygo.............",
-  "...owwWwwwwwwWwwwo............",
-  "..owwwWwwwwwwwWwwwo...........",
-  "..owwwWwwwwwwwWwwwo...........",
-  ".owwwwWwwwwwwwWwwwwo..........",
-  ".owwwwWwwwwwwwWwwwwo..........",
-  "owwwwwWwwwwwwwWwwwwwo.........",
-  "owwwwwWwwwwwwwWwwwwwo.........",
-  "oggyggggyggyggggygggo.........",
-  "oGGGGGGGGGGGGGGGGGGGo.........",
-  ".....ss.....ss................",
-  "....oooo...oooo...............",
+  "................................................",
+  "................................................",
+  "................................................",
+  "................................................",
+  "................................................",
+  "................................................",
+  "...........p.f.p..p.f.p.........................",
+  ".........opfhhhhHHhhhhfpo.......................",
+  ".......ofphhhhhhHHhhhhhhpfo.....................",
+  "...ohhhpfhhhhhhhHHhhhhhhhfpo....................",
+  "..ohhhhhhhhhhhhhHHhhhhhhhhhfo...................",
+  ".ofhhhhhhhhhhhhhgghhhhhhhhhho...................",
+  ".opHhhhhhsssssssggssssssshhho...................",
+  "..ofhhhhhsssssssyyssssssshho....................",
+  "...ohhohhsssshhhsshhhsssshho....................",
+  "......ohhsssskksssskksssshho....................",
+  ".....ogbbssssfksssskfssssbbgo...................",
+  ".....ogbbsssskksssskkssssbbgo...................",
+  ".....oysssssssssSSsssssssssyo...................",
+  "......osssssssssssssssssssso....................",
+  "......ossssssssmmmmsssssssso....................",
+  ".......osssssssssssssssssso.....................",
+  "........osssssssssssssssso......................",
+  "..........osssssssssssso........................",
+  "............oSssssssSo..........................",
+  "............oSssssssSo..........................",
+  "............ogygyygygo..........................",
+  "...........ogGgGggGgGgo.........................",
+  ".....owwwwwsgygyggygygswwwwwo...................",
+  ".owwwWggwwwssssgyygsssswwwwwWwwwo...............",
+  "oWwwwWwggwwwwssgyygsswwwwwwwWwwwWo..............",
+  "oWwwwWwwggwwwwwyGGywwwwwwwwwWwwwWo..............",
+  "oWwwwWwwwwggwwwwwwwwwwwwwwwwWwwwWo..............",
+  "oWwwwWwwwwwggpwfwwpwfwwwwwwwWwwwWo..............",
+  "ogygyWwwwwwwpfppfpfppfwwwwwwWygygo..............",
+  ".osssowwwwwfppfpfpfppfpwwwwwossso...............",
+  "..osssowwwwlpfppfppfpflwwwwossso................",
+  "...ogggowwwLlpfpfpfpfllwwwogggo.................",
+  "....osssowwwLlpffpffLLwwwossso..................",
+  ".....ossssssslllLLlllssssssso...................",
+  ".....oWwwwwwwwwwLLwwggwwwwwWo...................",
+  ".....oWwwwwwwwwwwwwwwggwwwwWo...................",
+  ".....oWwwwwwwwwwwwwwwwggwwwWo...................",
+  "....ogygggygggyggggygggygggygo..................",
+  "....oGGGGGGGGGGGGGGGGGGGGGGGGo..................",
+  "....owwwwwWwwwwwwwwwwwgWwgwwwo..................",
+  "...owwwwwwWwwwwwwwwwwwgWwgwwwwo.................",
+  "...owwwwwwWwwwwwwwwwwwgWwgwwwwo.................",
+  "..owwwwwwwWwwwwwwwwwwwgWwgwwwwwo................",
+  "..owwwwwwwWwwwwwwwwwwwgWwgwwwwwo................",
+  ".owwwwwwwwWwwwwwwwwwwwgWwgwwwwwwo...............",
+  ".owwwwwwwwWwwwwwwwwwwwgWwgwwwwwwo...............",
+  ".owwwwwwwwWwwwwwwwwwwwgWwgwwwwwwo...............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "owwwwwwwwwWwwwwwwwwwwwgWwgwwwwwwwo..............",
+  "oggygggyggygggyggggygggyggygggyggo..............",
+  "oGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGo..............",
+  ".......ssss............ssss.....................",
+  "......ogggggo........ogggggo....................",
+  "......ooooooo........ooooooo....................",
 ]);
 
-const BRIDE_FEET_TOGETHER = [
-  ".......ss..ss.................",
-  "......oooooooo................",
-];
-
-const BRIDE_WALK_B = grid(withRows(BRIDE_WALK_A, 38, BRIDE_FEET_TOGETHER));
+const BRIDE_WALK_B = grid(
+  withRows(BRIDE_WALK_A, {
+    61: "............ssss..ssss..........................",
+    62: "..........ogggggoogggggo........................",
+    63: "..........oooooooooooooo........................",
+  }),
+);
 
 const BRIDE_HOLD = grid(
-  BRIDE_WALK_B.map((row, index) => {
-    switch (index) {
-      case 10:
-        return "..ohhssskkssskkso.............";
-      case 11:
-        return "..ohhssssssssssso.............";
-      case 14:
-        return "...ossssssmmmmso..............";
-      case 19:
-        return "....owwwssssswwwoooo..........";
-      case 20:
-        return "...owwwwysssywwwowwo..........";
-      case 21:
-        return "..oWwwwwwgggwwwwoowwo.........";
-      case 22:
-        return "..oWwwwwwygywwwwo.owwo........";
-      case 23:
-        return "..oWwwwwwwwwwwo....owwo.......";
-      case 24:
-        return "..oWwwwwwwwwwwo.....ossso.....";
-      case 25:
-        return "...owwwwwwwwwwo......ooo......";
-      default:
-        return row;
-    }
-  })
+  withRows(BRIDE_WALK_B, {
+    15: "......ohhsssskkssskkksssshho....................",
+    16: ".....ogbbssskssksksskssssbbgo...................",
+    17: ".....ogbbssssssssssssssssbbgo...................",
+    19: "......osssssssmssssmssssssso....................",
+    35: ".osssowwwwwfppfpfpfppfwwwwwwo.osssso............",
+    36: "..osssowwwwlpfppfppfpfwwwwwwo..osssso...........",
+    37: "...ogggowwwLlpfpfpfpflwwwwwwo...ogyggo..........",
+    38: "....osssowwwLlpffpffLLwwwwwwo...ossssso.........",
+    39: ".....ossssssslllLLlllwwwwwwwo...ossssso.........",
+    40: ".....oWwwwwwwwwwLLwwggwwwwwWo...oSsssSo.........",
+    41: ".....oWwwwwwwwwwwwwwwggwwwwWo....ooooo..........",
+  }),
 );
 
 export const GROOM_SPRITES: CharacterSprites = {
@@ -230,5 +260,5 @@ export const HEART_SPRITE = grid(
     "....o....",
   ],
   HEART_WIDTH,
-  HEART_HEIGHT
+  HEART_HEIGHT,
 );

@@ -11,6 +11,7 @@ export const SPRITE_PALETTE = {
   s: "#f4c99c", // skin
   S: "#dda878", // skin shade
   h: "#332016", // hair
+  H: "#5a3a2a", // hair highlight / parting
   w: "#fdf7e7", // ivory garment
   W: "#e7d3ae", // garment shade / folds
   g: "#d29c3f", // gold
