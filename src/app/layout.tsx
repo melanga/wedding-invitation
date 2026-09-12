@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Great_Vibes, Jost, Playfair_Display } from "next/font/google";
+import { getSiteUrl } from "@/lib/siteUrl";
 import { weddingConfig } from "@/lib/weddingConfig";
 import "./globals.css";
 
@@ -21,10 +22,24 @@ const sans = Jost({
 });
 
 const { partnerOne, partnerTwo } = weddingConfig.couple;
+const pageTitle = `${partnerOne} & ${partnerTwo} | We're Getting Married`;
 
 export const metadata: Metadata = {
-  title: `${partnerOne} & ${partnerTwo} | We're Getting Married`,
+  metadataBase: getSiteUrl(),
+  title: pageTitle,
   description: weddingConfig.copy.metaDescription,
+  openGraph: {
+    title: pageTitle,
+    description: weddingConfig.copy.metaDescription,
+    type: "website",
+    locale: "en_US",
+    siteName: `${partnerOne} & ${partnerTwo}`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pageTitle,
+    description: weddingConfig.copy.metaDescription,
+  },
 };
 
 export const viewport: Viewport = {
