@@ -79,22 +79,27 @@ export const weddingConfig: WeddingConfig = {
     {
       time: "8:15 AM",
       title: "Guest Arrival",
+      description: "Please arrive a little early so we can welcome you with a smile.",
     },
     {
       time: "8:45 AM",
       title: "Marriage Registration",
+      description: "The official yes — a few signatures, then a lifetime of us.",
     },
     {
       time: "10:00 AM",
       title: "Poruwa Ceremony",
+      description: "Blessings from both families as we take our first steps together.",
     },
     {
       time: "12:00 PM",
       title: "Lunch",
+      description: "Come hungry, stay for seconds, and please leave room for cake.",
     },
     {
       time: "4:00 PM",
       title: "Departure",
+      description: "Send us off with your love — and perhaps a little rice.",
     },
   ],
   rsvp: {
