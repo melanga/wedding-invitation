@@ -46,45 +46,45 @@ function withRows(
 
 const GROOM_WALK_A = grid([
   ".................yy...........",
-  "................gggg..........",
-  "..............orrrrrro........",
-  "............orrrrrrrrrro......",
-  "..........orryrrryyrrryrro....",
-  ".........oyrrrrrrrrrrrrrryo...",
-  ".........oRrrrrrrrrrrrrrrRo...",
-  "..........oggyggyggyggyggo....",
+  "................oggo..........",
+  "..............oggyggo.........",
+  "............orryrryrro........",
+  "..........orryrrgyrryrro......",
+  ".........oyrrgyrrrygrryo......",
+  ".........oRrrrryrrrrrrRo......",
+  "..........ogyygyygyyyggo......",
   "...........ohhhhhhhhhhhho.....",
   "............ossssssssssso.....",
   "............oshhssshhssso.....",
   "............oskkssskkssso.....",
-  "............obbsssssbbsso.....",
+  "...........gobsbssSsbbsog.....",
   "............ossSsssssssso.....",
-  "............ossmmmsssssso.....",
+  "............ossmmmmssssso.....",
   ".............ossssssssso......",
   "..............ossssssso.......",
   "...............ossssso........",
   "..............ogsssssgo.......",
-  "...........owwwwwgggwwwwwo....",
-  "..........owwwwwwgggwwwwwwo...",
-  "..........oWwwywwygywwywwWo...",
-  "..........oWwwwywygywywwwWo...",
-  "...........owwwwygggywwwwo....",
-  "...........owwwwwgggwwwwwo....",
-  "............oWwwwgggwwwWo.....",
-  "............osswwgggwwsso.....",
-  ".............owwwgggwwwo......",
-  "............orrrrygyrrrro.....",
-  "............oRrrrgggrrrRo.....",
-  "...........owwWwwwgwwwWwwo....",
-  "..........owwWwwwwgwwwwWwwo...",
-  ".........owwwWwwwwgwwwwWwwwo..",
-  ".........owwwWwwwwgwwwwWwwwo..",
-  "........owwwwWwwwwgwwwwWwwwwo.",
-  "........oggyggggyggyggggygggo.",
-  "........oGGGGGGGGGGGGGGGGGGGo.",
-  ".............oso.....oso......",
-  "..........okkkko....okkkko....",
-  "..........oooooo....oooooo....",
+  "..........owWwwrygyrwwWwwo....",
+  ".........owWwwwgyggwwwwWwwo...",
+  ".........oWwwyygygygyywwwWo...",
+  ".........oWwwwygRgygywwwwWo...",
+  "..........owwwwggGggwwwwwo....",
+  "..........oWwwywgGgwywwwWo....",
+  "...........owwwwgGgwwwwwo.....",
+  "...........osswwgggwwsso......",
+  "............owwwgggwwwo.......",
+  "...........orrryygyyrrrro.....",
+  "...........oRrrrgggrrrrRo.....",
+  "..........owwWwwygywwWwwwo....",
+  ".........owwWwwwgGwwwwWwwo....",
+  "........owwwWwwygywwwwWwwwo...",
+  "........owwwWwwwgGwwwwwWwwo...",
+  ".......owwwwWwwygywwwwwWwwwo..",
+  ".......oggyggggyggyggggygggo..",
+  ".......oGGGGGGGGGGGGGGGGGGGo..",
+  "............oso.....oso.......",
+  ".........okkkko....okkkko.....",
+  ".........oooooo....oooooo.....",
 ]);
 
 const GROOM_FEET_TOGETHER = [
@@ -103,21 +103,21 @@ const GROOM_HOLD = grid(
       case 11:
         return "............ossssssssssso.....";
       case 14:
-        return "............osmmmmsssssso.....";
+        return "............ossmmmmssssso.....";
       case 19:
-        return ".......ooooowwwwwgggwwwwwo....";
+        return "......ooooowWwwwrygyrwwWwwo...";
       case 20:
-        return ".......owwowwwwwwgggwwwwwwo...";
+        return "......owwowWwwwgyggwwwwWwwo...";
       case 21:
-        return "......owwooWwwywwygywwywwWo...";
+        return ".....owwooWwwyygygygyywwwWo...";
       case 22:
-        return ".....owwo.oWwwwywygywywwwWo...";
+        return "....owwo.oWwwwygRgygywwwwWo...";
       case 23:
-        return "....owwo...owwwwygggywwwwo....";
+        return "...owwo...owwwwggGggwwwwwo....";
       case 24:
-        return ".ossso.....owwwwwgggwwwwwo....";
+        return ".ossso....oWwwywgGgwywwwWo....";
       case 25:
-        return "..ooo.......oWwwwgggwwwWo.....";
+        return "..ooo......owwwwgGgwwwwwo.....";
       default:
         return row;
     }
@@ -127,40 +127,40 @@ const GROOM_HOLD = grid(
 const BRIDE_WALK_A = grid([
   "..............................",
   "..............................",
-  "..............................",
-  "..............................",
-  "......pp.ff.pp................",
+  "........f.gf.f................",
+  "......pf.gyg.fp...............",
+  "....ppf.ghg.fpp...............",
   ".....ohhhhhhhhhhho............",
   "...ohhhhhhhhhhhhhho...........",
   "..ophhhhhhhhhhhhho............",
-  "..ohhgggggggggggho............",
-  "..ohhsssssgssssso.............",
+  "..ohhgggygygggggho............",
+  "..ohhssssgssssssso............",
   "..ohhssshhssshhso.............",
   "..ohhssskkssskkso.............",
-  "..ohhsbbsssssbbso.............",
+  ".gohhsbbssSssbbso.g...........",
   "..ohhssssssssSssgo............",
   "...ossssssmmmsso..............",
   "....osssssssssso..............",
   ".....osssssssso...............",
   ".......ossssso................",
-  "......ogggggggo...............",
-  "....owwwssssswwwowwwo.........",
-  "...owwwwysssywwwoWWWo.........",
-  "..oWwwwwwgggwwwwoWWo..........",
-  "..oWwwwwwygywwppfpo...........",
-  "..oWwwwwwwssplppo.............",
-  "..oWwwwwwwsslplpo.............",
-  "...owwwwwwwwlLlo..............",
-  "...owwwwwwwwwwo...............",
-  "....owwwwwwwwwwwo.............",
-  "....oggygggyggygo.............",
-  "...owwWwwwwwwWwwwo............",
-  "..owwwWwwwwwwwWwwwo...........",
-  "..owwwWwwwwwwwWwwwo...........",
-  ".owwwwWwwwwwwwWwwwwo..........",
-  ".owwwwWwwwwwwwWwwwwo..........",
-  "owwwwwWwwwwwwwWwwwwwo.........",
-  "owwwwwWwwwwwwwWwwwwwo.........",
+  "......ogyygyygo...............",
+  "....owWwssgsswWwowwwo.........",
+  "...owWwwygggywWwoWWWo.........",
+  "..oWwwwwygygwwwwoWWo..........",
+  "..oWwwwwwgggwwwppfpo..........",
+  "..oWwwwywwssplppo.............",
+  "..oWwwwgywsslplpo.............",
+  "...owwwwywwwlLlo..............",
+  "...oWwwwgwwwwwWo..............",
+  "....owwwywwwwwwwo.............",
+  "....oggygygyggygo.............",
+  "...owwWwywwywWwwwo............",
+  "..owwwWwgwwgwwWwwwo...........",
+  "..owwwWwywwywwWwwwo...........",
+  ".owwwwWwgwwgwwwwWwwwwo........",
+  ".owwwwWwywwywwwwWwwwwo........",
+  "owwwwwWwgwwgwwwwwWwwwwwo......",
+  "owwwwwWwywwywwwwwWwwwwwo......",
   "oggyggggyggyggggygggo.........",
   "oGGGGGGGGGGGGGGGGGGGo.........",
   ".....ss.....ss................",
@@ -184,19 +184,19 @@ const BRIDE_HOLD = grid(
       case 14:
         return "...ossssssmmmmso..............";
       case 19:
-        return "....owwwssssswwwoooo..........";
+        return "....owWwssgsswWwoooo..........";
       case 20:
-        return "...owwwwysssywwwowwo..........";
+        return "...owWwwygggywWwowwo..........";
       case 21:
-        return "..oWwwwwwgggwwwwoowwo.........";
+        return "..oWwwwwygygwwwwoowwo.........";
       case 22:
-        return "..oWwwwwwygywwwwo.owwo........";
+        return "..oWwwwwwgggwwwwo.owwo........";
       case 23:
-        return "..oWwwwwwwwwwwo....owwo.......";
+        return "..oWwwwywwwwwo....owwo........";
       case 24:
-        return "..oWwwwwwwwwwwo.....ossso.....";
+        return "..oWwwwgywwwwwo.....ossso.....";
       case 25:
-        return "...owwwwwwwwwwo......ooo......";
+        return "...owwwwywwwwwo......ooo......";
       default:
         return row;
     }
