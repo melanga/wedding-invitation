@@ -1,10 +1,9 @@
 /**
  * Pixel-art sprites for the Kandyan wedding couple.
  *
- * Both characters share a 48x64 grid. In the hold pose the bride's right
- * hand and the groom's left hand occupy the shared clasp oval (rows 48-51),
- * so with `HOLD_OVERLAP` columns of overlap the two hands land on the same
- * pixels. Keep those anchors in sync when editing either sprite.
+ * Both characters share a 48x64 grid. In the hold pose both sprites paint
+ * the same clasp (rows 32-34) so with HOLD_OVERLAP columns of overlap the
+ * hands land on the same pixels. Keep those rows in sync.
  */
 
 export const SPRITE_WIDTH = 48;
@@ -125,12 +124,12 @@ const GROOM_HOLD = grid(
     17: "................oSbbssskssksssksssssssbbSo......",
     18: ".................oSbbssssssssssssssssbbSo.......",
     21: "..................ossssssmmmmmmmmsssssso........",
-    32: "...........oowwooWwwgwwwwwwgGGgwwwwwwgwwWWwwo...",
-    33: ".......owwwo.owwWWwgwwwwwwwgyygwwwwwwwgwWWwwo...",
-    34: "....owwwo....owwWWwygwwwwwwgGGgwwwwwwgywWWwwo...",
-    35: "...owwo...........oWwwwwwwwgyygwwwwwwwWowwWo....",
-    36: "..ossso...........oWwwwwwwwgGGgwwwwwwwWowwWo....",
-    37: "...ooo............oWwwwwwwwgyygwwwwwwwWowwWo....",
+    32: "..owwwwosssoowwoWWwwgwwwwwwgGGgwwwwwwgwwWWwwo...",
+    33: "..owwwosssssowwoWWwgwwwwwwwgyygwwwwwwwgwWWwwo...",
+    34: "..owwwwossoowwwoWWwygwwwwwwgGGgwwwwwwgywWWwwo...",
+    35: "..................oWwwwwwwwgyygwwwwwwwWowwWo....",
+    36: "..................oWwwwwwwwgGGgwwwwwwwWowwWo....",
+    37: "..................oWwwwwwwwgyygwwwwwwwWowwWo....",
     38: "..................oWwwwwwwwgGGgwwwwwwwWowwWo....",
     39: "..................oWwwwwwwwgyygwwwwwwwWoyggo....",
     40: "..................oWwwwwwwwgGGgwwwwwwwWossso....",
@@ -219,14 +218,14 @@ const BRIDE_HOLD = grid(
     16: ".....ogbbssskssksksskssssbbgo...................",
     17: ".....ogbbssssssssssssssssbbgo...................",
     19: "......osssssssmssssmssssssso....................",
-    32: "oWwwwWwwwwggwwwwwwwwwooowwowWwwwWo..............",
-    33: "oWwwwWwwwwwggpwfwwpwfwwwowwwowwwWo..............",
-    34: "ogygyWwwwwwwpfppfpfppfwwwwwowwwo................",
-    35: ".osssowwwwwfppfpfpfppfpwwww...owwo..............",
-    36: "..osssowwwwlpfppfppfpflwwww.....ossso...........",
-    37: "...ogggowwwLlpfpfpfpfllwwwo......ooo............",
-    38: "....osssowwwLlpffpffLLwwwos.....................",
-    39: ".....ossssssslllLLlllssssss.....................",
+    32: "oWwwwWwwwwggwwwwwwwwwwwwwwwwWwwwowwwwosssoowwo..",
+    33: "oWwwwWwwwwwggpwfwwpwfwwwwwwwWwwwowwwosssssowwo..",
+    34: "ogygyWwwwwwwpfppfpfppfwwwwwwWygyowwwwossoowwwo..",
+    35: ".osssowwwwwfppfpfpfppfpwwwow....................",
+    36: "..osssowwwwlpfppfppfpflwwwoo....................",
+    37: "...ogggowwwLlpfpfpfpfllwwwog....................",
+    38: "....osssowwwLlpffpffLLwwwoos....................",
+    39: ".....ossssssslllLLlllsssssos....................",
   }),
 );
 
