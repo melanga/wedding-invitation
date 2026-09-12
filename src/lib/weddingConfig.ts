@@ -47,11 +47,6 @@ export interface WeddingConfig {
     deadlineDisplay: string;
     note: string;
   };
-  contact: {
-    name: string;
-    phone?: string;
-    email?: string;
-  }[];
 }
 
 export const weddingConfig: WeddingConfig = {
@@ -61,15 +56,15 @@ export const weddingConfig: WeddingConfig = {
     hashtag: "#JananiAndMelanga",
   },
   event: {
-    startIso: "2027-02-14T16:00:00+05:30",
-    endIso: "2027-02-14T22:00:00+05:30",
-    displayDate: "Sunday, February 14th, 2027",
-    displayTime: "4:00 PM onwards",
+    startIso: "2026-10-23T08:15:00+05:30",
+    endIso: "2026-10-23T16:00:00+05:30",
+    displayDate: "Friday, October 23rd, 2026",
+    displayTime: "8:15 AM onwards",
   },
   venue: {
-    name: "The Garden Pavilion",
-    address: "123 Lakeside Avenue, Colombo, Sri Lanka",
-    mapUrl: "https://maps.google.com/?q=The+Garden+Pavilion+Colombo",
+    name: "The Grand Walawwa",
+    address: "No. 190/8 Kandy Road, Kegalle, Sri Lanka",
+    mapUrl: "https://maps.app.goo.gl/Nw35emYtQdSbnANfA",
   },
   copy: {
     metaDescription:
@@ -82,32 +77,33 @@ export const weddingConfig: WeddingConfig = {
   },
   schedule: [
     {
-      time: "3:30 PM",
+      time: "8:15 AM",
       title: "Guest Arrival",
-      description: "Please arrive a little early to find your seat.",
+      description: "Please arrive a little early so we can welcome you with a smile.",
+    },
+    {
+      time: "8:45 AM",
+      title: "Marriage Registration",
+      description: "The official yes — a few signatures, then a lifetime of us.",
+    },
+    {
+      time: "10:00 AM",
+      title: "Poruwa Ceremony",
+      description: "Blessings from both families as we take our first steps together.",
+    },
+    {
+      time: "12:00 PM",
+      title: "Lunch",
+      description: "Come hungry, stay for seconds, and please leave room for cake.",
     },
     {
       time: "4:00 PM",
-      title: "Ceremony",
-      description: "Exchange of vows at the garden pavilion.",
-    },
-    {
-      time: "5:30 PM",
-      title: "Photographs",
-      description: "Join us for photos with the newlyweds.",
-    },
-    {
-      time: "6:30 PM",
-      title: "Reception & Dinner",
-      description: "Dinner, drinks and dancing under the stars.",
+      title: "Departure",
+      description: "Send us off with your love.",
     },
   ],
   rsvp: {
-    deadlineDisplay: "January 15th, 2027",
+    deadlineDisplay: "October 10th, 2026",
     note: "Kindly RSVP so we can prepare a seat (and a slice of cake) just for you.",
   },
-  contact: [
-    { name: "Janani", phone: "+94 71 234 5678" },
-    { name: "Melanga", phone: "+94 77 876 5432" },
-  ],
 };

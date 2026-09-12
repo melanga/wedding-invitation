@@ -5,6 +5,7 @@
 export const SPRITE_WIDTH = 30;
 export const SPRITE_HEIGHT = 40;
 export const HOLD_OVERLAP = 11;
+export const SPRITE_DISPLAY_WIDTH = "clamp(94px, 19vw, 156px)";
 
 export type SpriteGrid = readonly string[];
 
