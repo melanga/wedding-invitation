@@ -13,14 +13,13 @@ export const SPRITE_PALETTE = {
   h: "#332016", // hair
   H: "#54331f", // hair sheen / brows
   w: "#fdf7e7", // ivory garment
+  d: "#f2e6cd", // ivory lace shade
   W: "#e7d3ae", // garment shade / folds
   g: "#d29c3f", // gold
   G: "#a3762a", // gold shade
   y: "#f2d27d", // gold highlight
   r: "#a92433", // kandyan red
   R: "#7c1522", // kandyan red shade
-  p: "#ef93b4", // flower pink
-  P: "#cf5d86", // flower pink shade
   f: "#fff8ec", // flower white / pearl
   l: "#5d8a4a", // leaf green
   L: "#3f6234", // leaf shade
