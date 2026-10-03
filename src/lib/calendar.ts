@@ -1,3 +1,4 @@
+import type { InvitationContent } from "@/lib/content";
 import { weddingConfig } from "@/lib/weddingConfig";
 
 interface CalendarEvent {
@@ -12,19 +13,19 @@ function toUtcStamp(date: Date): string {
   return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 }
 
-function getCalendarEvent(): CalendarEvent {
-  const { event, venue, couple } = weddingConfig;
+function getCalendarEvent({ calendar }: InvitationContent): CalendarEvent {
+  const { event } = weddingConfig;
   return {
-    title: `${couple.partnerOne} & ${couple.partnerTwo}'s Wedding`,
-    description: `Join us as we celebrate the wedding of ${couple.partnerOne} & ${couple.partnerTwo}. ${weddingConfig.copy.metaDescription}`,
-    location: `${venue.name}, ${venue.address}`,
+    title: calendar.eventTitle,
+    description: calendar.eventDescription,
+    location: calendar.eventLocation,
     start: new Date(event.startIso),
     end: new Date(event.endIso),
   };
 }
 
-export function buildGoogleCalendarUrl(): string {
-  const { title, description, location, start, end } = getCalendarEvent();
+export function buildGoogleCalendarUrl(content: InvitationContent): string {
+  const { title, description, location, start, end } = getCalendarEvent(content);
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: title,
@@ -35,8 +36,8 @@ export function buildGoogleCalendarUrl(): string {
   return `https://www.google.com/calendar/render?${params.toString()}`;
 }
 
-export function buildIcsContent(): string {
-  const { title, description, location, start, end } = getCalendarEvent();
+export function buildIcsContent(content: InvitationContent): string {
+  const { title, description, location, start, end } = getCalendarEvent(content);
   const now = toUtcStamp(new Date());
 
   const lines = [

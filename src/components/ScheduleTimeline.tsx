@@ -7,7 +7,7 @@ import {
   useScroll,
   useSpring,
 } from "framer-motion";
-import { weddingConfig } from "@/lib/weddingConfig";
+import type { InvitationContent } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/Ornament";
 import { SPRING_SOFT, VIEWPORT_ONCE } from "@/lib/motion";
@@ -35,8 +35,8 @@ function TimelineDot({ className }: { className?: string }) {
   );
 }
 
-export function ScheduleTimeline() {
-  const { schedule } = weddingConfig;
+export function ScheduleTimeline({ content }: { content: InvitationContent }) {
+  const { schedule } = content;
   const listRef = useRef<HTMLOListElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -52,7 +52,7 @@ export function ScheduleTimeline() {
   return (
     <section className="bg-cream/60 px-6 py-20 lg:py-28">
       <Reveal>
-        <SectionHeading eyebrow="The Itinerary" title="Schedule" />
+        <SectionHeading eyebrow={schedule.eyebrow} title={schedule.title} />
       </Reveal>
 
       <ol
@@ -70,7 +70,7 @@ export function ScheduleTimeline() {
           aria-hidden="true"
         />
 
-        {schedule.map((item, index) => {
+        {schedule.items.map((item, index) => {
           const isLeftSide = index % 2 === 0;
 
           return (
@@ -96,7 +96,7 @@ export function ScheduleTimeline() {
                 delay={0.1}
                 direction={isLeftSide ? "right" : "left"}
               >
-                <p className="text-xs font-medium tracking-widest text-sage-dark uppercase sm:text-sm">
+                <p className="text-xs font-medium tracking-widest text-sage-dark uppercase sm:text-sm sinhala:tracking-normal">
                   {item.time}
                 </p>
                 <p className="mt-1 font-display text-lg text-charcoal lg:text-xl">

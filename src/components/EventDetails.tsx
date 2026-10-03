@@ -1,15 +1,16 @@
 import { weddingConfig } from "@/lib/weddingConfig";
+import type { InvitationContent } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/Ornament";
 import { AddToCalendar } from "@/components/AddToCalendar";
 
-export function EventDetails() {
-  const { event, venue } = weddingConfig;
+export function EventDetails({ content }: { content: InvitationContent }) {
+  const { event, venue } = content;
 
   return (
     <section id="event" className="px-6 py-20 lg:py-28">
       <Reveal>
-        <SectionHeading eyebrow="Save the Date" title="Wedding Day" />
+        <SectionHeading eyebrow={event.eyebrow} title={event.title} />
       </Reveal>
 
       <Reveal delay={0.1}>
@@ -38,12 +39,12 @@ export function EventDetails() {
               </p>
 
               <a
-                href={venue.mapUrl}
+                href={weddingConfig.venue.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-block text-sm font-medium text-sage-dark underline underline-offset-4 transition-colors hover:text-charcoal"
               >
-                View on Google Maps
+                {venue.mapLink}
               </a>
             </div>
           </div>
@@ -52,7 +53,7 @@ export function EventDetails() {
 
       <Reveal delay={0.2}>
         <div className="mt-8 flex justify-center lg:mt-10">
-          <AddToCalendar />
+          <AddToCalendar content={content} />
         </div>
       </Reveal>
     </section>

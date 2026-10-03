@@ -9,6 +9,7 @@ import {
   type Variants,
 } from "framer-motion";
 import { weddingConfig } from "@/lib/weddingConfig";
+import type { InvitationContent } from "@/lib/content";
 import { Ornament } from "@/components/Ornament";
 import { FloatingPetals } from "@/components/FloatingPetals";
 import { RsvpTriggerButton } from "@/components/RsvpTriggerButton";
@@ -53,8 +54,9 @@ function HeroBackdrop() {
   );
 }
 
-export function Hero() {
-  const { couple, event, copy } = weddingConfig;
+export function Hero({ content }: { content: InvitationContent }) {
+  const { hero, event } = content;
+  const { couple } = weddingConfig;
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
 
@@ -82,9 +84,9 @@ export function Hero() {
       >
         <motion.p
           variants={staggerChild}
-          className="text-xs font-medium tracking-[0.25em] text-sage-dark uppercase sm:text-sm"
+          className="text-xs font-medium tracking-[0.25em] text-sage-dark uppercase sm:text-sm sinhala:tracking-normal"
         >
-          {copy.greetingEyebrow}
+          {hero.greetingEyebrow}
         </motion.p>
 
         <div className="mt-6 flex flex-col items-center overflow-visible px-4 lg:mt-10 lg:flex-row lg:items-baseline lg:gap-8">
@@ -116,7 +118,7 @@ export function Hero() {
           variants={staggerChild}
           className="mt-8 max-w-xs text-sm leading-relaxed text-taupe sm:max-w-sm sm:text-base"
         >
-          {copy.invitationLine}
+          {hero.invitationLine}
         </motion.p>
 
         <motion.div variants={staggerChild} className="mt-6">
@@ -130,7 +132,7 @@ export function Hero() {
 
         <motion.div variants={staggerChild}>
           <RsvpTriggerButton className="mt-10 inline-flex items-center justify-center rounded-full bg-charcoal px-8 py-3 text-sm font-medium tracking-wide text-ivory transition-colors hover:bg-sage-dark sm:px-10 sm:text-base">
-            RSVP
+            {hero.rsvpButton}
           </RsvpTriggerButton>
         </motion.div>
       </motion.div>
@@ -142,8 +144,8 @@ export function Hero() {
         transition={{ delay: 2, duration: 0.8 }}
         aria-hidden="true"
       >
-        <span className="text-[0.65rem] tracking-[0.2em] uppercase">
-          Scroll
+        <span className="text-[0.65rem] tracking-[0.2em] uppercase sinhala:tracking-normal">
+          {hero.scrollHint}
         </span>
         <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
           <rect

@@ -52,7 +52,7 @@ export function SectionHeading({
   return (
     <div className="text-center">
       {eyebrow ? (
-        <p className="mb-2 text-xs font-medium tracking-[0.2em] text-sage-dark uppercase sm:text-sm">
+        <p className="mb-2 text-xs font-medium tracking-[0.2em] text-sage-dark uppercase sm:text-sm sinhala:tracking-normal">
           {eyebrow}
         </p>
       ) : null}

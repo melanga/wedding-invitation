@@ -2,27 +2,43 @@ import { z } from "zod";
 
 export const attendanceOptions = ["yes", "no"] as const;
 
-export const rsvpSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Please enter your full name")
-    .max(80, "That name looks a little long"),
-  email: z
-    .string()
-    .trim()
-    .pipe(z.email("Please enter a valid email address")),
-  attending: z.enum(attendanceOptions, {
-    error: "Please let us know if you'll be attending",
-  }),
-  guestCount: z
-    .number()
-    .int()
-    .min(1, "At least one guest is required")
-    .max(10, "Please contact us directly for larger groups"),
-  message: z.string().trim().max(500, "Message is too long").optional(),
-  // Honeypot field: real users never fill this in; bots typically do.
-  company: z.string().max(0).optional(),
-});
+/** Most guests one RSVP can cover, whatever an invite link allows. */
+export const MAX_GUESTS = 10;
 
-export type RsvpFormValues = z.infer<typeof rsvpSchema>;
+/** Validation copy, supplied per language from src/lib/content/. */
+export interface RsvpValidationMessages {
+  nameTooShort: string;
+  nameTooLong: string;
+  emailInvalid: string;
+  attendingRequired: string;
+  guestCountInvalid: string;
+  guestCountMin: string;
+  guestCountMax: string;
+  messageTooLong: string;
+}
+
+export function createRsvpSchema(
+  messages: RsvpValidationMessages,
+  maxGuests = MAX_GUESTS
+) {
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .min(2, messages.nameTooShort)
+      .max(80, messages.nameTooLong),
+    email: z.string().trim().pipe(z.email(messages.emailInvalid)),
+    attending: z.enum(attendanceOptions, {
+      error: messages.attendingRequired,
+    }),
+    guestCount: z
+      .int(messages.guestCountInvalid)
+      .min(1, messages.guestCountMin)
+      .max(maxGuests, messages.guestCountMax),
+    message: z.string().trim().max(500, messages.messageTooLong).optional(),
+    // Honeypot field: real users never fill this in; bots typically do.
+    company: z.string().max(0).optional(),
+  });
+}
+
+export type RsvpFormValues = z.infer<ReturnType<typeof createRsvpSchema>>;

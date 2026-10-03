@@ -16,8 +16,12 @@ popup form.
   a closing call-to-action — with client + server-side validation (Zod), a
   honeypot field for basic spam protection, and submissions saved straight
   into a Notion database.
-- **Content is centralized** in [`src/lib/weddingConfig.ts`](./src/lib/weddingConfig.ts)
-  — update names, dates, venue, schedule and copy in one place.
+- **English and Sinhala** — the invitation is in English unless the link
+  you share asks for Sinhala (`?lang=si`).
+- **Per-guest seat allowance** — the RSVP guest count is locked to 1 unless
+  the link allows more (`?guests=2`).
+- **Content is centralized** in [`src/lib/content/`](./src/lib/content/) —
+  one file per language for every word guests read.
 
 ## Getting Started
 
@@ -30,11 +34,36 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Editing the invitation content
 
-Everything guest-facing — names, wedding date, venue, schedule, closing copy,
-RSVP deadline and contact numbers — lives in one file:
-[`src/lib/weddingConfig.ts`](./src/lib/weddingConfig.ts). Update the values
-there and the whole site (hero, calendar links, event card, schedule, RSVP
-copy, footer) stays in sync automatically.
+Everything guests read — wedding date, venue, schedule, closing copy, RSVP
+deadline, form labels and messages — lives in one file per language:
+[`src/lib/content/en.ts`](./src/lib/content/en.ts) and
+[`src/lib/content/si.ts`](./src/lib/content/si.ts). Both follow the same
+shape, so TypeScript flags any string a translation is missing. Change a
+detail in both files to keep the two versions in step.
+
+Facts shared by both languages — the couple's names as shown in the cursive
+headings, the hashtag, the exact event times and the map link — live in
+[`src/lib/weddingConfig.ts`](./src/lib/weddingConfig.ts). The whole site
+(hero, calendar links, event card, schedule, RSVP form, footer) reads from
+these files.
+
+## Sharing invitation links
+
+Each guest's link can set two query parameters:
+
+| Parameter  | Effect                                                           |
+| ---------- | ---------------------------------------------------------------- |
+| `lang=si`  | Shows the invitation (and its link preview) in Sinhala. Any other value, or none, shows English. |
+| `guests=N` | Lets the guest RSVP for up to `N` people, themselves included (capped at 10). Without it, the guest count is locked to 1. |
+
+For example:
+
+- `https://<your-site>/` — English, one seat
+- `https://<your-site>/?guests=2` — English, up to two guests
+- `https://<your-site>/?lang=si&guests=3` — Sinhala, up to three guests
+
+The allowance only shapes the form: anyone can edit the link, so check the
+`Guests` column in Notion if a count looks off.
 
 ## Connecting the RSVP form to Notion
 
@@ -77,11 +106,12 @@ failing silently or crashing the app.
 
 ## Calendar & venue details
 
-The "Add to Calendar" buttons and event card are generated from
-`weddingConfig.event` and `weddingConfig.venue`. Make sure `startIso` /
-`endIso` include a UTC offset (e.g. `+05:30`) so the generated calendar
-event resolves to the correct time for every guest, regardless of server
-timezone.
+The "Add to Calendar" buttons take their times from `weddingConfig.event`
+and their title and notes from the guest's language. The location is
+always the English venue name and address, so calendar apps can find it on
+a map. Make sure `startIso` / `endIso` include a UTC offset (e.g. `+05:30`)
+so the generated calendar event resolves to the correct time for every
+guest, regardless of server timezone.
 
 ## Tech stack
 

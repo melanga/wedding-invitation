@@ -22,9 +22,13 @@
   --color-gold-light: var(--color-gold-light);
 
   --font-cursive: var(--font-cursive);
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
+  /* Latin glyphs come from the first font; Sinhala falls through to the next. */
+  --font-display: var(--font-display), var(--font-sinhala-serif);
+  --font-sans: var(--font-sans), var(--font-sinhala-sans);
 }
+
+/* Styles for text inside a lang="si" invitation, e.g. sinhala:tracking-normal. */
+@custom-variant sinhala (&:lang(si));
 
 html {
   scroll-behavior: smooth;

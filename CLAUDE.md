@@ -15,8 +15,8 @@ npm run build    # production build; also type-checks
 
 There is no test suite. Validate changes with `npm run lint` and `npm run build`.
 Running `tsc --noEmit` on its own needs `npx next typegen` first, because global route
-types such as `LayoutProps<"/">` (used in `src/app/layout.tsx`) are generated and
-`next-env.d.ts` is gitignored.
+types such as `LayoutProps<"/">` and `PageProps<"/">` (used in `src/app/`) are generated
+and `next-env.d.ts` is gitignored.
 
 Node 24.x is pinned in `package.json` `engines`. The stack is Next.js 16 (App Router),
 React 19, Tailwind CSS v4, Framer Motion, React Hook Form with Zod 4, and the Notion SDK.
@@ -30,22 +30,49 @@ sections (`Hero` → `EventDetails` → `ScheduleTimeline` → `ClosingCta` → 
 `RsvpModalProvider`, with two fixed overlays drawn outside `<main>`: `PixelCoupleScroll`
 and `RsvpModal`.
 
-### Content lives in one file
+### Invite links
 
-All guest-facing content is in `src/lib/weddingConfig.ts`: names, date and time, venue,
-schedule, copy, RSVP deadline and contacts. Components, page metadata
-(`src/app/layout.tsx`), the OG image (`src/app/opengraph-image.tsx`) and calendar links
-(`src/lib/calendar.ts`) all read from it, so don't hard-code content in components.
-`event.startIso` and `event.endIso` must include a UTC offset (for example `+05:30`) so
-the Google Calendar and `.ics` output resolve to the correct instant.
+`src/lib/inviteLink.ts` turns the query string into `{ locale, maxGuests }`: `?lang=si`
+selects Sinhala (anything else is English) and `?guests=N` lets the guest RSVP for up to
+`N` people (capped at `MAX_GUESTS`, otherwise 1). `page.tsx` and its `generateMetadata`
+both read it, so `/` renders per request rather than statically. The root layout can't
+read search params, so `<html lang>` stays `en` and a wrapper `<div lang={locale}>` in
+`page.tsx` carries the page language.
+
+### Content and languages
+
+Every string guests read lives in `src/lib/content/en.ts` and `src/lib/content/si.ts`,
+both typed by `InvitationContent` (`src/lib/content/types.ts`). A new string goes into the
+type and both files; TypeScript catches a missing translation. Facts shared by both
+languages (the Latin-script names used by the cursive headings, hashtag, ISO times, map
+URL) stay in `src/lib/weddingConfig.ts`. Don't hard-code text in components.
+
+- `page.tsx` calls `getContent(locale)` and passes the result as a `content` prop to
+  each section, client components included. Keep content plain serializable data, not
+  functions. The only runtime placeholder is `{count}` in `guestCountLimit`, which
+  `RsvpForm` fills in. Client code (including `src/lib/calendar.ts`) only imports
+  content types, so the browser gets one language through props instead of bundling
+  both files.
+- Sinhala yansaya, rakaransaya and repaya forms (e.g. the `්‍ය` in `මංගල්‍යය`) depend
+  on an invisible zero-width joiner (U+200D). Keep it when editing `si.ts`.
+- The OG image always uses English content. `calendar.eventLocation` is English in every
+  language so map apps can geocode it. Calendar titles and notes follow the guest's
+  language.
+- `event.startIso` and `event.endIso` must include a UTC offset (for example `+05:30`) so
+  the Google Calendar and `.ics` output resolve to the correct instant.
 
 ### RSVP flow
 
 - `RsvpModalContext` holds the modal's open state. Any `RsvpTriggerButton` (hero,
   floating button, closing CTA) opens the single `RsvpModal`, which renders `RsvpForm`.
-- `src/lib/rsvpSchema.ts` is the one Zod schema. The client (react-hook-form via
-  `@hookform/resolvers`) and the server (`src/app/api/rsvp/route.ts`) both validate
-  with it.
+- `createRsvpSchema(messages, maxGuests)` in `src/lib/rsvpSchema.ts` builds the one Zod
+  schema. `RsvpForm` (react-hook-form via `@hookform/resolvers`) builds it with the
+  guest's language and link allowance. `src/app/api/rsvp/route.ts` builds it with English
+  messages and `MAX_GUESTS`. The API's error text is never shown: `RsvpForm` maps a 503
+  to `unavailableError` and any other failure to `genericError`.
+- Without a guest allowance the guest-count input is rendered disabled and left
+  unregistered, so react-hook-form still submits its default of `1`. RHF's own `disabled`
+  option would drop the field from the submitted values.
 - `company` is a honeypot field. When it is filled in, the route returns success without
   writing anything.
 - `src/lib/notion.ts` writes each RSVP as a page in a Notion database. `NOTION_PROPERTY`
@@ -90,5 +117,9 @@ Tailwind v4 is configured in CSS with no `tailwind.config`. Design tokens (`ivor
 `cream`, `charcoal`, `taupe`, `sage`, `gold`, and so on) are CSS variables in
 `src/app/globals.css`, exposed through `@theme inline`. The fonts are Great Vibes
 (`font-cursive`, used for names), Playfair Display (`font-display`) and Jost
-(`font-sans`), loaded with `next/font` in `layout.tsx`. The `@/*` import alias maps to
+(`font-sans`), loaded with `next/font` in `layout.tsx`. Noto Serif Sinhala and Noto Sans
+Sinhala are appended to the display and sans stacks, so Latin glyphs keep the original
+fonts and only Sinhala characters fall through. They aren't preloaded, so English pages
+never download them. The `sinhala:` variant (`:lang(si)`) adjusts Sinhala text, e.g.
+`sinhala:tracking-normal` on wide-tracked eyebrows. The `@/*` import alias maps to
 `src/*`.

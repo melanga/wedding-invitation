@@ -1,4 +1,5 @@
 import { weddingConfig } from "@/lib/weddingConfig";
+import type { InvitationContent } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import { Ornament } from "@/components/Ornament";
 import {
@@ -9,7 +10,7 @@ import {
 
 const FOOTER_CLEARANCE = `calc(${SPRITE_DISPLAY_WIDTH} * ${SPRITE_HEIGHT / SPRITE_WIDTH} + 6rem)`;
 
-export function Footer() {
+export function Footer({ content }: { content: InvitationContent }) {
   const { couple } = weddingConfig;
 
   return (
@@ -28,7 +29,7 @@ export function Footer() {
       </Reveal>
 
       <p className="mt-12 text-xs text-ivory/40">
-        With love, {couple.partnerOne} &amp; {couple.partnerTwo}
+        {content.footer.signOff}
       </p>
     </footer>
   );

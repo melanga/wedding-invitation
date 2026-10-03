@@ -1,8 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { Great_Vibes, Jost, Playfair_Display } from "next/font/google";
+import {
+  Great_Vibes,
+  Jost,
+  Noto_Sans_Sinhala,
+  Noto_Serif_Sinhala,
+  Playfair_Display,
+} from "next/font/google";
 import { getSiteUrl } from "@/lib/siteUrl";
-import { weddingConfig } from "@/lib/weddingConfig";
 import "./globals.css";
 
 const cursive = Great_Vibes({
@@ -21,25 +26,23 @@ const sans = Jost({
   subsets: ["latin"],
 });
 
-const { partnerOne, partnerTwo } = weddingConfig.couple;
-const pageTitle = `${partnerOne} & ${partnerTwo} | We're Getting Married`;
+// Sinhala fallbacks for the display and sans stacks (see globals.css). Not
+// preloaded: browsers only fetch them once Sinhala text is on the page.
+const sinhalaSerif = Noto_Serif_Sinhala({
+  variable: "--font-sinhala-serif",
+  subsets: ["sinhala"],
+  preload: false,
+});
 
+const sinhalaSans = Noto_Sans_Sinhala({
+  variable: "--font-sinhala-sans",
+  subsets: ["sinhala"],
+  preload: false,
+});
+
+// Title, description and previews are set per language in app/page.tsx.
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
-  title: pageTitle,
-  description: weddingConfig.copy.metaDescription,
-  openGraph: {
-    title: pageTitle,
-    description: weddingConfig.copy.metaDescription,
-    type: "website",
-    locale: "en_US",
-    siteName: `${partnerOne} & ${partnerTwo}`,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: pageTitle,
-    description: weddingConfig.copy.metaDescription,
-  },
 };
 
 export const viewport: Viewport = {
@@ -52,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${cursive.variable} ${display.variable} ${sans.variable}`}
+      className={`${cursive.variable} ${display.variable} ${sans.variable} ${sinhalaSerif.variable} ${sinhalaSans.variable}`}
     >
       <body className="min-h-full bg-ivory font-sans text-charcoal antialiased">
         {children}

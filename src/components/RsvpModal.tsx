@@ -4,9 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRsvpModal } from "@/components/RsvpModalContext";
 import { RsvpForm } from "@/components/RsvpForm";
-import { weddingConfig } from "@/lib/weddingConfig";
+import type { InvitationContent } from "@/lib/content";
 
-export function RsvpModal() {
+interface RsvpModalProps {
+  content: InvitationContent;
+  /** Guests, including the invitee, the invite link allows. */
+  maxGuests: number;
+}
+
+export function RsvpModal({ content, maxGuests }: RsvpModalProps) {
+  const { rsvp } = content;
   const { isOpen, close } = useRsvpModal();
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -60,13 +67,13 @@ export function RsvpModal() {
                   id="rsvp-modal-title"
                   className="font-display text-2xl text-charcoal"
                 >
-                  RSVP
+                  {rsvp.title}
                 </h2>
                 {hasSubmitted ? null : (
                   <p className="mt-1 text-sm text-taupe">
-                    Kindly respond by{" "}
-                    <span className="font-medium text-charcoal">
-                      {weddingConfig.rsvp.deadlineDisplay}
+                    {rsvp.respondBy}{" "}
+                    <span className="font-medium whitespace-nowrap text-charcoal">
+                      {rsvp.deadlineDisplay}
                     </span>
                   </p>
                 )}
@@ -74,7 +81,7 @@ export function RsvpModal() {
               <button
                 type="button"
                 onClick={handleClose}
-                aria-label="Close RSVP form"
+                aria-label={rsvp.closeLabel}
                 className="shrink-0 rounded-full p-1 text-taupe transition-colors hover:text-charcoal"
               >
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -88,7 +95,11 @@ export function RsvpModal() {
               </button>
             </div>
 
-            <RsvpForm onSuccessChange={setHasSubmitted} />
+            <RsvpForm
+              content={content}
+              maxGuests={maxGuests}
+              onSuccessChange={setHasSubmitted}
+            />
           </motion.div>
         </motion.div>
       ) : null}

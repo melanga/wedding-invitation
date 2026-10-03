@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { getContent } from "@/lib/content";
 import { weddingConfig } from "@/lib/weddingConfig";
 
 export const alt = `${weddingConfig.couple.partnerOne} & ${weddingConfig.couple.partnerTwo} are getting married`;
@@ -34,7 +35,9 @@ async function loadGoogleFont(family: string, weight = 400): Promise<ArrayBuffer
 }
 
 export default async function Image() {
-  const { couple, event, venue, copy } = weddingConfig;
+  const { couple } = weddingConfig;
+  // One shared preview image, so it stays in English for every language.
+  const { hero, event, venue } = getContent("en");
   const [cursive, display, sans] = await Promise.all([
     loadGoogleFont("Great Vibes"),
     loadGoogleFont("Playfair Display", 500),
@@ -65,7 +68,7 @@ export default async function Image() {
             color: "#5c6b50",
           }}
         >
-          {copy.greetingEyebrow}
+          {hero.greetingEyebrow}
         </div>
         <div
           style={{

@@ -1,16 +1,11 @@
 /**
- * Single source of truth for all wedding content.
+ * Wedding facts shared by every language: the couple's names, the exact
+ * event times and the venue's map link.
  *
- * Editing the wedding details, venue, schedule or copy should only ever
- * require changes in this file — components read from here so the rest
- * of the codebase never hard-codes content.
+ * Everything guests read — the date as written, venue, schedule and all
+ * copy — lives per language in src/lib/content/, so components never
+ * hard-code content.
  */
-
-export interface ScheduleItem {
-  time: string;
-  title: string;
-  description?: string;
-}
 
 export interface WeddingConfig {
   couple: {
@@ -27,25 +22,9 @@ export interface WeddingConfig {
     startIso: string;
     /** ISO 8601 date-time with UTC offset for the end of the event */
     endIso: string;
-    displayDate: string;
-    displayTime: string;
   };
   venue: {
-    name: string;
-    address: string;
     mapUrl: string;
-  };
-  copy: {
-    metaDescription: string;
-    greetingEyebrow: string;
-    invitationLine: string;
-    closingTitle: string;
-    closingMessage: string;
-  };
-  schedule: ScheduleItem[];
-  rsvp: {
-    deadlineDisplay: string;
-    note: string;
   };
 }
 
@@ -58,52 +37,8 @@ export const weddingConfig: WeddingConfig = {
   event: {
     startIso: "2026-10-23T08:15:00+05:30",
     endIso: "2026-10-23T16:00:00+05:30",
-    displayDate: "Friday, October 23rd, 2026",
-    displayTime: "8:15 AM onwards",
   },
   venue: {
-    name: "The Grand Walawwa",
-    address: "No. 190/8 Kandy Road, Kegalle, Sri Lanka",
     mapUrl: "https://maps.app.goo.gl/Nw35emYtQdSbnANfA",
-  },
-  copy: {
-    metaDescription:
-      "Janani & Melanga are getting married — join us as we celebrate the beginning of our forever.",
-    greetingEyebrow: "Together with their families",
-    invitationLine: "request the pleasure of your company",
-    closingTitle: "Join Us",
-    closingMessage:
-      "Your presence means the world to us. Let us know if you'll be celebrating with us.",
-  },
-  schedule: [
-    {
-      time: "8:15 AM",
-      title: "Guest Arrival",
-      description: "Please arrive a little early so we can welcome you with a smile.",
-    },
-    {
-      time: "8:45 AM",
-      title: "Marriage Registration",
-      description: "The official yes — a few signatures, then a lifetime of us.",
-    },
-    {
-      time: "10:00 AM",
-      title: "Poruwa Ceremony",
-      description: "Blessings from both families as we take our first steps together.",
-    },
-    {
-      time: "12:00 PM",
-      title: "Lunch",
-      description: "Come hungry, stay for seconds, and please leave room for cake.",
-    },
-    {
-      time: "4:00 PM",
-      title: "Departure",
-      description: "Send us off with your love.",
-    },
-  ],
-  rsvp: {
-    deadlineDisplay: "October 10th, 2026",
-    note: "Kindly RSVP so we can prepare a seat (and a slice of cake) just for you.",
   },
 };

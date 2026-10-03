@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { rsvpSchema } from "@/lib/rsvpSchema";
+import { getContent } from "@/lib/content";
+import { createRsvpSchema } from "@/lib/rsvpSchema";
 import { createRsvpEntry, NotionNotConfiguredError } from "@/lib/notion";
+
+// The form shows its own translated errors, so the API answers in English.
+const rsvpSchema = createRsvpSchema(getContent("en").rsvp.validation);
 
 export async function POST(request: NextRequest) {
   let body: unknown;
