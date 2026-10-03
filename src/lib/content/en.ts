@@ -77,7 +77,7 @@ export const en: InvitationContent = {
   rsvp: {
     title: "RSVP",
     closeLabel: "Close RSVP form",
-    respondBy: "Kindly respond by",
+    respondBy: "Kindly respond by {date}",
     deadlineDisplay: "October 10th, 2026",
     form: {
       nameLabel: "Full Name",

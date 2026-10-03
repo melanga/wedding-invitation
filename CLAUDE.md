@@ -49,10 +49,13 @@ URL) stay in `src/lib/weddingConfig.ts`. Don't hard-code text in components.
 
 - `page.tsx` calls `getContent(locale)` and passes the result as a `content` prop to
   each section, client components included. Keep content plain serializable data, not
-  functions. The only runtime placeholder is `{count}` in `guestCountLimit`, which
-  `RsvpForm` fills in. Client code (including `src/lib/calendar.ts`) only imports
-  content types, so the browser gets one language through props instead of bundling
-  both files.
+  functions. Client code (including `src/lib/calendar.ts`) only imports content types,
+  so the browser gets one language through props instead of bundling both files.
+- Strings that embed a runtime value use placeholders, so each language can put the
+  value where its grammar needs: `{count}` in `guestCountLimit` (filled by `RsvpForm`)
+  and `{date}` in `respondBy` (filled by `RsvpModal` and `ClosingCta`).
+- `si.ts` is written the way Sri Lankan invitations are worded, not translated line by
+  line, so its strings needn't mirror the English ones.
 - Sinhala yansaya, rakaransaya and repaya forms (e.g. the `්‍ය` in `මංගල්‍යය`) depend
   on an invisible zero-width joiner (U+200D). Keep it when editing `si.ts`.
 - The OG image always uses English content. `calendar.eventLocation` is English in every

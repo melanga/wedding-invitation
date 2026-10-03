@@ -14,6 +14,7 @@ interface RsvpModalProps {
 
 export function RsvpModal({ content, maxGuests }: RsvpModalProps) {
   const { rsvp } = content;
+  const [beforeDate, afterDate] = rsvp.respondBy.split("{date}");
   const { isOpen, close } = useRsvpModal();
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -71,10 +72,11 @@ export function RsvpModal({ content, maxGuests }: RsvpModalProps) {
                 </h2>
                 {hasSubmitted ? null : (
                   <p className="mt-1 text-sm text-taupe">
-                    {rsvp.respondBy}{" "}
+                    {beforeDate}
                     <span className="font-medium whitespace-nowrap text-charcoal">
                       {rsvp.deadlineDisplay}
                     </span>
+                    {afterDate}
                   </p>
                 )}
               </div>

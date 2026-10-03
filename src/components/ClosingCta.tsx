@@ -23,7 +23,7 @@ export function ClosingCta({ content }: { content: InvitationContent }) {
         </RsvpTriggerButton>
 
         <p className="mt-4 text-xs text-taupe sm:text-sm">
-          {rsvp.respondBy} {rsvp.deadlineDisplay}
+          {rsvp.respondBy.replace("{date}", rsvp.deadlineDisplay)}
         </p>
       </Reveal>
     </section>

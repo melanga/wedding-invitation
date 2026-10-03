@@ -58,7 +58,7 @@ export interface InvitationContent {
   rsvp: {
     title: string;
     closeLabel: string;
-    /** Shown right before `deadlineDisplay`. */
+    /** `{date}` is replaced by `deadlineDisplay`. */
     respondBy: string;
     deadlineDisplay: string;
     form: {
